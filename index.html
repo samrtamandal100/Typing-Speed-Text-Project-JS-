@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <title></title>
+    <head>
+
+    </head>
+
+    <body>
+           <div id="maincontainer">
+           </div id="center">
+           <h1>Welcome To Typeing Speed Test </h1>
+           <h2 id="msp"> </h2>
+           <textarea id="txtarea" cols="100" rows="10" placeholder="Type...."></textarea>
+           <br>
+           <button id="btn" class="mainbtn">Start</button>
+           </div>
+           </div>
+           <script>
+            const text=[
+                "the original words and form of a written or printed work",
+                " the main body of printed or written matter on a page",
+                "a verse or passage of Scripture chosen especially for the subject of a sermon or for authoritative support"
+            ]
+            const msp =document.getElementById('msp');
+            const txtarea =document.getElementById('txtarea');
+            const btn =document.getElementsByClassName('mainbtn');
+            let starttime ,endtime;
+            const playg = () =>{
+                let rannumber =Math.floor(Math.random()*text.length);
+                msp.innerText =text[rannumber];
+                let date = new Date();
+                starttime  =date.getTime();
+                document.getElementById('btn').innerText ="Done";
+
+            }
+              const countword =(wordnum)=>
+              {
+                  let count = wordnum.split(" ").length;
+                  return count;
+              }
+              const compare=(word1, word2)=>
+              {
+                   let str1 =word1.split(" ");
+                   let str2 =word2.split(" ");
+                   let count =0;
+
+                   str2.forEach( function(item ,index) {
+                           if(item==str1[index])
+                           {
+                             count ++;
+                           }
+                   });
+
+                   return str2.length-count;
+
+
+                   
+                   
+              }
+             const endplay =()=>
+             {
+                let date = new Date();
+                endtime = date.getTime();
+                let totaltime = ((endtime - starttime)/1000);
+                // console.log(totaltime);
+
+                let wordnum = txtarea.value;
+                let sizewd = countword(wordnum);
+                // console.log(sizewd);
+                 let speed = ((sizewd /totaltime)*60);
+                //  console.log(speed);
+                speed =Math.round(speed);
+
+                 let ans = compare(wordnum ,msp.innerText);
+                //  console.log(`You typing Speed ${speed} Word Per Minute. ${ans} word Are Incorrect `);
+                 document.getElementById('msp').innerText = `You typing Speed ${speed} Word Per Minute. ${ans} word Are Incorrect `;
+
+
+
+             }
+            document.getElementById('btn').addEventListener("click",function()
+            {
+                if(this.innerText =='Start')
+                {
+                    txtarea.disabled =false;
+                    playg(); 
+                }else if(this.innerText =="Done")
+                {
+                    txtarea.disabled =true;
+                    endplay();
+                }
+            });
+
+
+
+
+           </script>
+    </body>
+</html>
